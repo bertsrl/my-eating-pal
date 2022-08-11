@@ -1,5 +1,10 @@
 # my-eating-pal
 
+## Demo
+```
+https://my-eating-pal.web.app
+```
+
 ## Project setup
 ```
 npm install
