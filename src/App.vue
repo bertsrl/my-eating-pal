@@ -1,12 +1,21 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
+    <Navbar />
     <router-view/>
+     <img class="materialboxed logo" width="300" inDuration='350' src="images-1.jpg">
   </div>
 </template>
+
+<script>
+import Navbar from '@/components/Navbar.vue'
+
+export default {
+  components: {
+    Navbar
+  }
+}
+</script>
+
 
 <style lang="scss">
 #app {
@@ -28,5 +37,10 @@ nav {
       color: #42b983;
     }
   }
+}
+.logo {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 </style>
