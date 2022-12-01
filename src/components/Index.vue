@@ -10,12 +10,18 @@
           </li>
         </ul>
       </div>
-      <span class="btn-floating btn-large halfway-fab pink waves-effect waves-light">
+      <span v-if="loggedIn" class="btn-floating btn-large halfway-fab pink waves-effect waves-light">
         <router-link :to="{ name: 'EditRecipe', params: {recipe_slug: recipe.slug} }">
           <i class="material-icons edit">edit</i>
         </router-link>
       </span>
     </div>
+    <p v-if="!loggedIn">
+      For admin privileges you'll need to log into an admin account. <br>
+      Use the following credentials: <br>
+      email: admin@bert.com <br>
+      password: 123456
+    </p>
   </div>
 </template>
 
@@ -24,11 +30,17 @@ import {auth, db} from "@/firebaseInit";
 
 export default {
   name: 'Index',
-  data() {
-    return {
-      recipes: []
-    }
-  },
+  mounted() {
+        auth.onAuthStateChanged( user => {
+            this.loggedIn = !!user;
+        })
+    },
+    data() {
+        return {
+            loggedIn: false,
+            recipes: []
+        }
+    },
   methods: {
     deleteRecipe(id) {
       db.collection('recipes').doc(id).delete().then(() => {
@@ -82,4 +94,9 @@ export default {
 
     .v-enter-from, .v-leave-to
       opacity: 0
+  p
+    position: absolute
+    top: 125px
+    left: 6px
+    text-align: left
 </style>

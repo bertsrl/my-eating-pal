@@ -1,17 +1,19 @@
 <template>
   <div id="app">
     <Navbar />
-    <router-view/>
+    <router-view />
      <img class="materialboxed logo" width="300" inDuration='350' src="images-1.jpg">
   </div>
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue'
+import Navbar from '@/components/Navbar.vue';
+import Index from '@/components/Index.vue';
 
 export default {
   components: {
-    Navbar
+    Navbar,
+    Index
   }
 }
 </script>

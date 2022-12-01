@@ -12,33 +12,46 @@
           </div>
           <div class="field center-align">
               <p v-if="feedback" class="red-text" >{{ feedback }}</p>
-              <button class="btn pink">Login</button>
+              <button type="submit" class="btn pink">Login</button>
           </div>
-          
       </form>
+      <p>
+        For admin privileges you'll need to log into an admin account. <br>
+        Use the following credentials: <br>
+        email: admin@bert.com <br>
+        password: 123456
+      </p>
   </div>
 </template>
 
 <script>
-import {auth, db} from "@/firebaseInit"
-import slugify from 'slugify'
-import { id } from 'date-fns/locale'
-import firebase from "firebase";
+import { auth, db, functions } from "@/firebaseInit"
 
 export default {
     
     name: 'Login',
+    mounted() {
+        auth.onAuthStateChanged( user => {
+            this.loggedIn = !!user;
+        })
+    },
     data() {
         return {
             email: null,
             password: null,
             feedback: null,
-            slug: null
+            loggedIn: false
         }
     },
     methods: {
         async loginButtonPressed() {
-            
+            try {
+                const val = await auth.signInWithEmailAndPassword(this.email, this.password);
+                console.log("Your val:", val);
+                this.$router.replace({name: "Index"});
+            } catch(err) {
+                console.log(err);    
+            }
         }
     }
 }
@@ -69,4 +82,9 @@ export default {
             width: 100%
             display: flex
             flex-wrap: wrap
+    p
+        position: absolute
+        top: 125px
+        left: 6px
+        text-align: left
 </style>
